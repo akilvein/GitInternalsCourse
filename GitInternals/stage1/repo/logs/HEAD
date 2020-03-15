@@ -1,0 +1,32 @@
+0000000000000000000000000000000000000000 5407d2769315c449fd7939fca2ffebef5916c078 Kilvein Andrey <akilvein@saber3d.ru> 1583923101 +0300	commit (initial): start work
+5407d2769315c449fd7939fca2ffebef5916c078 f53d94487dae62dcca67aebfe738cb12ae741680 Kilvein Andrey <akilvein@saber3d.ru> 1583923145 +0300	commit: continue work
+f53d94487dae62dcca67aebfe738cb12ae741680 f53d94487dae62dcca67aebfe738cb12ae741680 Kilvein Andrey <akilvein@saber3d.ru> 1583923233 +0300	checkout: moving from master to feature-one
+f53d94487dae62dcca67aebfe738cb12ae741680 391892feafd49b51205ed31ea5c80119dc8cc05f Kilvein Andrey <akilvein@saber3d.ru> 1583923330 +0300	commit: start work on feature
+391892feafd49b51205ed31ea5c80119dc8cc05f d532a5bbfef046f89f01dcc258c2dd2098e1e136 Kilvein Andrey <akilvein@saber3d.ru> 1583923382 +0300	commit: continue work on feature
+d532a5bbfef046f89f01dcc258c2dd2098e1e136 4a15f70bcefc153d495f9d8bd2535cb0eeefc961 Kilvein Andrey <akilvein@saber3d.ru> 1583923408 +0300	commit: feature is ready!
+4a15f70bcefc153d495f9d8bd2535cb0eeefc961 4a15f70bcefc153d495f9d8bd2535cb0eeefc961 Kilvein Andrey <akilvein@saber3d.ru> 1583923439 +0300	checkout: moving from feature-one to feature-two
+4a15f70bcefc153d495f9d8bd2535cb0eeefc961 f53d94487dae62dcca67aebfe738cb12ae741680 Kilvein Andrey <akilvein@saber3d.ru> 1583923464 +0300	checkout: moving from feature-two to master
+f53d94487dae62dcca67aebfe738cb12ae741680 4a15f70bcefc153d495f9d8bd2535cb0eeefc961 Kilvein Andrey <akilvein@saber3d.ru> 1583923480 +0300	merge feature-one: Fast-forward
+4a15f70bcefc153d495f9d8bd2535cb0eeefc961 dd3eb80aa06d1b06c067f6c6922d17456cff0ed2 Kilvein Andrey <akilvein@saber3d.ru> 1583923598 +0300	commit: fix qq
+dd3eb80aa06d1b06c067f6c6922d17456cff0ed2 b077ef1f6ffd6fa19ffdf8faf9552e0b77dff525 Kilvein Andrey <akilvein@saber3d.ru> 1583923618 +0300	commit: fix bar
+b077ef1f6ffd6fa19ffdf8faf9552e0b77dff525 7061e66fcd0e27e395514dbfac886218ad092815 Kilvein Andrey <akilvein@saber3d.ru> 1583923634 +0300	commit: fix foo.bar
+7061e66fcd0e27e395514dbfac886218ad092815 4a15f70bcefc153d495f9d8bd2535cb0eeefc961 Kilvein Andrey <akilvein@saber3d.ru> 1583923648 +0300	checkout: moving from master to feature-two
+4a15f70bcefc153d495f9d8bd2535cb0eeefc961 cf66d69290f1d10e3dfffb9fb21690eae5eaa53a Kilvein Andrey <akilvein@saber3d.ru> 1583923691 +0300	commit: start work on feature two
+cf66d69290f1d10e3dfffb9fb21690eae5eaa53a a34d047b5655469f3d72309be6d2da0abcd9d149 Kilvein Andrey <akilvein@saber3d.ru> 1583923712 +0300	commit: continue work on feature two
+a34d047b5655469f3d72309be6d2da0abcd9d149 32d389704c85bcb17742c78af932c931e2200650 Kilvein Andrey <akilvein@saber3d.ru> 1583923740 +0300	commit: finish work on feature
+32d389704c85bcb17742c78af932c931e2200650 7061e66fcd0e27e395514dbfac886218ad092815 Kilvein Andrey <akilvein@saber3d.ru> 1583923751 +0300	checkout: moving from feature-two to master
+7061e66fcd0e27e395514dbfac886218ad092815 0d7951bc4e34c1cd2ce2e0d8e954cca47ba00e48 Kilvein Andrey <akilvein@saber3d.ru> 1583923819 +0300	commit (merge): Merge branch 'feature-two'
+0d7951bc4e34c1cd2ce2e0d8e954cca47ba00e48 0d7951bc4e34c1cd2ce2e0d8e954cca47ba00e48 Kilvein Andrey <akilvein@saber3d.ru> 1583924060 +0300	checkout: moving from master to feature-three
+0d7951bc4e34c1cd2ce2e0d8e954cca47ba00e48 2fb892fa0e7846b6eefd402223a56acf89e336ea Kilvein Andrey <akilvein@saber3d.ru> 1583924093 +0300	commit: fix
+2fb892fa0e7846b6eefd402223a56acf89e336ea 0d7951bc4e34c1cd2ce2e0d8e954cca47ba00e48 Kilvein Andrey <akilvein@saber3d.ru> 1583924101 +0300	checkout: moving from feature-three to master
+0d7951bc4e34c1cd2ce2e0d8e954cca47ba00e48 0d7951bc4e34c1cd2ce2e0d8e954cca47ba00e48 Kilvein Andrey <akilvein@saber3d.ru> 1583924111 +0300	checkout: moving from master to feature-four
+0d7951bc4e34c1cd2ce2e0d8e954cca47ba00e48 1b033bffe51895f39fd3f028665b732e89d6fe10 Kilvein Andrey <akilvein@saber3d.ru> 1583924139 +0300	commit: other fix
+1b033bffe51895f39fd3f028665b732e89d6fe10 0d7951bc4e34c1cd2ce2e0d8e954cca47ba00e48 Kilvein Andrey <akilvein@saber3d.ru> 1583924158 +0300	checkout: moving from feature-four to master
+0d7951bc4e34c1cd2ce2e0d8e954cca47ba00e48 6cae78398796fe4b9336b64e50fc9de4e1b520a7 Kilvein Andrey <akilvein@saber3d.ru> 1583924202 +0300	commit: continue work
+6cae78398796fe4b9336b64e50fc9de4e1b520a7 2fb892fa0e7846b6eefd402223a56acf89e336ea Kilvein Andrey <akilvein@saber3d.ru> 1583924449 +0300	checkout: moving from master to feature-three
+2fb892fa0e7846b6eefd402223a56acf89e336ea 6cae78398796fe4b9336b64e50fc9de4e1b520a7 Kilvein Andrey <akilvein@saber3d.ru> 1583924456 +0300	checkout: moving from feature-three to master
+6cae78398796fe4b9336b64e50fc9de4e1b520a7 7525463b7294014d2a008a8251da818b0e5252c9 Kilvein Andrey <akilvein@saber3d.ru> 1583924468 +0300	merge feature-three: Merge made by the 'recursive' strategy.
+7525463b7294014d2a008a8251da818b0e5252c9 8d7b82203af8bdf491d68325a7f34ff8650f0df5 Kilvein Andrey <akilvein@saber3d.ru> 1583924481 +0300	merge feature-four: Merge made by the 'recursive' strategy.
+8d7b82203af8bdf491d68325a7f34ff8650f0df5 7525463b7294014d2a008a8251da818b0e5252c9 Kilvein Andrey <akilvein@saber3d.ru> 1583924506 +0300	checkout: moving from master to 7525463
+7525463b7294014d2a008a8251da818b0e5252c9 7525463b7294014d2a008a8251da818b0e5252c9 Kilvein Andrey <akilvein@saber3d.ru> 1583924522 +0300	checkout: moving from 7525463b7294014d2a008a8251da818b0e5252c9 to feature-five
+7525463b7294014d2a008a8251da818b0e5252c9 51ba7343df69a0ecf3565622eb18efdeb81a5a40 Kilvein Andrey <akilvein@saber3d.ru> 1583924557 +0300	commit: start work on feature

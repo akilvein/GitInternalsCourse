@@ -1,0 +1,8 @@
+type: edu
+files:
+- name: src/gitinternals/Main.kt
+  visible: true
+- name: src/gitinternals/tree.txt
+  visible: true
+- name: test/GitInternalsTest.java
+  visible: false
