@@ -3,9 +3,8 @@ package gitinternals
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileInputStream
-import java.lang.IllegalArgumentException
-import java.util.*
 import java.util.zip.InflaterInputStream
+import kotlin.IllegalArgumentException
 
 
 sealed class GitObject {
@@ -15,118 +14,171 @@ sealed class GitObject {
 
     class Commit(val tree: String,
                  val parents: Array<String>,
-                 val author: String,
-                 val committer: String,
-                 val date: String,
+                 val author: Person,
+                 val committer: Person,
                  val message: String) : GitObject() {
+        class Person(val name: String, val email: String, val date: String)
         override fun toString(): String =
-                """ |tree: $tree
+                """ |Commit:
+                    |tree: $tree
                     |parents: ${parents.joinToString()}
-                    |author: $author
-                    |committer: $committer
-                    |date: $date
+                    |author: ${author.name} ${author.email} ${author.date}
+                    |committer: ${committer.name} ${committer.email} ${committer.date}
                     |message: 
                     |$message
                 """.trimMargin()
     }
 
-    class Tree() : GitObject() {
-        override fun toString(): String = "Tree: NOT IMPLEMENTED"
+    class Tree(val items: Array<Item>) : GitObject() {
+        class Item(val name: String, val hash: String, val permission: String)
+
+        override fun toString(): String {
+            var result = "Tree: \n"
+            for (i in items) {
+                result += "${i.name}: ${i.hash} (${i.permission})\n"
+            }
+            return result
+        }
+    }
+
+    class Reader(filepath: String) {
+        val fis = FileInputStream(filepath)
+        val iis = InflaterInputStream(fis)
+        var actualLength = 0
+        var eofReached = false
+
+        fun readBinaryHash(): String {
+            var result = ""
+            repeat(20) {
+                val data = iis.read()
+                require(data >= 0) { "EOF while reading hash" }
+                result += Integer.toHexString(data);
+            }
+            actualLength += 20
+            return result
+        }
+
+        fun readOneLine(): String {
+            val bos = ByteArrayOutputStream()
+            readLoop@while (true) {
+                val data = iis.read()
+                when {
+                    data < 0 -> {
+                        eofReached = true
+                        break@readLoop
+                    }
+                    data > 0 && data != '\n'.toInt() -> {
+                        bos.write(data)
+                        actualLength++
+                    }
+                    else -> {
+                        actualLength++
+                        break@readLoop
+                    }
+                }
+            }
+            return bos.toString(Charsets.UTF_8)
+        }
+
+        fun readRemainingLines(): String {
+            val bos = ByteArrayOutputStream()
+            readLoop@while (true) {
+                val data = iis.read()
+                when {
+                    data < 0 -> {
+                        eofReached = true
+                        break@readLoop
+                    }
+                    data > 0 -> {
+                        bos.write(data)
+                        actualLength++
+                    }
+                    else -> actualLength++
+                }
+            }
+            return bos.toString(Charsets.UTF_8)
+        }
+
+        fun parseBlobBody(declaredLength: Int): Blob {
+            val text = readRemainingLines()
+            require(declaredLength == text.length) {
+                "Declared length ($declaredLength) does not match actual text length(${text.length})"
+            }
+            return Blob(text)
+        }
+
+        fun parseCommitBody(declaredLength: Int): Commit {
+            var line = readOneLine().trim()
+            val (tree, treeHash) = line.split(" ")
+            require(tree == "tree")
+            require(treeHash.length == 40) { "hash size is ${treeHash.length}. (${treeHash})" }
+
+            val parentHashes = mutableListOf<String>()
+            while (true) {
+                line = readOneLine()
+                val (parent, parentHash) = line.split(" ")
+                if (parent == "parent") {
+                    require(parentHash.length == 40)
+                    parentHashes.add(parentHash)
+                }
+                else {
+                    break
+                }
+            }
+
+            val (author, authorLine) = line.split(delimiters = *arrayOf(" "), limit = 2)
+            require(author == "author")
+            val (authorName, authorEmail, originalDate) = authorLine.split(" <", "> ")
+
+            val (committer, committerLine) = readOneLine().split(delimiters = *arrayOf(" "), limit = 2)
+            require(committer == "committer")
+            val (committerName, committerEmail, commitDate) = committerLine.split(" <", "> ")
+
+            val message = readRemainingLines()
+
+            require(actualLength == declaredLength) {
+                "Declared length ($declaredLength) does not match actual read data size ($actualLength)"
+            }
+
+            return Commit(
+                    treeHash,
+                    parentHashes.toTypedArray(),
+                    Commit.Person(authorName, authorEmail, originalDate),
+                    Commit.Person(committerName, committerEmail, commitDate),
+                    message)
+        }
+
+        fun parseTreeBody(declaredLength: Int): Tree {
+            val items = mutableListOf<Tree.Item>()
+            while (!eofReached) {
+                val line = readOneLine()
+                if (line.isEmpty()) break
+                val (permission, name) = line.split(" ")
+                val hash = readBinaryHash()
+                items.add(Tree.Item(name, hash, permission))
+            }
+
+            require(actualLength == declaredLength) {
+                "Declared length ($declaredLength) does not match actual read data size ($actualLength)"
+            }
+
+            return Tree(items.toTypedArray())
+        }
     }
 
     companion object {
         fun parseFromFile(filepath: String): GitObject {
-            val fis = FileInputStream(filepath)
-            val iis = InflaterInputStream(fis)
+            val reader = Reader(filepath)
 
-            var actualLength = 0
+            val (type, declaredLength) = reader.readOneLine().split(" ")
+            reader.actualLength = 0
 
-            fun readOneLine(): String {
-                val bos = ByteArrayOutputStream()
-                while (true) {
-                    val data = iis.read()
-                    if (data >= 0) {
-                        actualLength++
-                    }
-                    if (data > 0 && data != '\n'.toInt()) {
-                        bos.write(data)
-                    }
-                    else {
-                        break
-                    }
-                }
-                return bos.toString(Charsets.UTF_8)
+            return when (type) {
+                "blob" -> reader.parseBlobBody(declaredLength.toInt())
+                "commit" -> reader.parseCommitBody(declaredLength.toInt())
+                "tree" -> reader.parseTreeBody(declaredLength.toInt())
+                else -> throw IllegalArgumentException("Unknown object type $type")
             }
-
-            fun readRemainingLines(): String {
-                val bos = ByteArrayOutputStream()
-                while (true) {
-                    val data = iis.read()
-                    if (data >= 0) {
-                        actualLength++
-                    }
-                    if (data > 0) {
-                        bos.write(data)
-                    }
-                    else {
-                        break
-                    }
-                }
-                return bos.toString(Charsets.UTF_8)
-            }
-
-            val (type, declaredLength) = readOneLine().split(" ")
-            actualLength = 0
-
-            when (type) {
-                "blob" -> {
-                    val text = readRemainingLines()
-                    require(declaredLength.toInt() == text.length) {
-                        "Declared length ($declaredLength) does not match actual text length(${text.length})"
-                    }
-                    return Blob(text)
-                }
-
-                "commit" -> {
-                    var line = readOneLine().trim()
-                    val (tree, treeHash) = line.split(" ")
-                    require(tree == "tree")
-                    require(treeHash.length == 40)
-
-                    val parentHashes = mutableListOf<String>()
-                    while (true) {
-                        line = readOneLine()
-                        val (parent, parentHash) = line.split(" ")
-                        if (parent == "parent") {
-                            require(parentHash.length == 40)
-                            parentHashes.add(parentHash)
-                        }
-                        else {
-                            break
-                        }
-                    }
-
-                    val (author, authorLine) = line.split(delimiters = *arrayOf(" "), limit = 2)
-                    require(author == "author")
-
-                    val (committer, committerLine) = readOneLine().split(delimiters = *arrayOf(" "), limit = 2)
-                    require(committer == "committer")
-
-                    val message = readRemainingLines() + 1
-
-                    require(actualLength == declaredLength.toInt()) {
-                        "Declared length ($declaredLength) does not match actual read data size ($actualLength)"
-                    }
-
-                    return Commit(treeHash, parentHashes.toTypedArray(), authorLine, committerLine, "TODO", message)
-                }
-
-                "tree" -> {
-                    return Tree()
-                }
-            }
-
-            throw IllegalArgumentException("could not parse object file")
         }
     }
 }
