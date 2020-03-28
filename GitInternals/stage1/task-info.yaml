@@ -6,3 +6,5 @@ files:
   visible: true
 - name: test/GitInternalsTest.java
   visible: false
+- name: test/test.txt
+  visible: false
