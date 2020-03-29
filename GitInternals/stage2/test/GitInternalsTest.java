@@ -26,43 +26,51 @@ public class GitInternalsTest extends BaseStageTest<List<String>> {
                 new TestCase<List<String>>()
                         .setInput(
                                 "test\n" +
-                                "980a0d5f19a64b4b30a87d4206aade58726b60e3\n")
+                                "0eee6a98471a350b2c2316313114185ecaf82f0e\n")
                         .setAttach(Arrays.asList(
                                 "Enter .git directory location:",
                                 "Enter git object hash:",
-                                "type:blob length:13")),
+                                "type:commit length:216")),
                 new TestCase<List<String>>()
                         .setInput(
                                 "test\n" +
-                                "3853917edcd00d84c82ccb9b679f7b0d14ca7902\n")
+                                "490f96725348e92770d3c6bab9ec532564b7ebe0\n")
                         .setAttach(Arrays.asList(
                                 "Enter .git directory location:",
                                 "Enter git object hash:",
-                                "type:commit length:209")),
+                                "type:blob length:85")),
                 new TestCase<List<String>>()
                         .setInput(
                                 "test\n" +
-                                "7912066edef8097c06b2b71064ba5ee31849592c\n")
+                                "618383db6d7ee3bd2e97b871205f113b6a3ba854\n")
                         .setAttach(Arrays.asList(
                                 "Enter .git directory location:",
                                 "Enter git object hash:",
-                                "type:tree length:36")),
+                                "type:blob length:14")),
                 new TestCase<List<String>>()
                         .setInput(
                                 "test\n" +
-                                "a720ad76243e69f0a5f55418ec30ff21757e40bd\n")
+                                "a7b882bbf2db5d90287e9affc7e6f3b3c740b327\n")
                         .setAttach(Arrays.asList(
                                 "Enter .git directory location:",
                                 "Enter git object hash:",
-                                "type:tree length:101")),
+                                "type:tree length:35")),
                 new TestCase<List<String>>()
                         .setInput(
                                 "test\n" +
-                                "617593c7bc820f0f606b0f2f9801a08bb880087c\n")
+                                "fb043556c251cb450a0d55e4ceb1ff35e12029c3\n")
                         .setAttach(Arrays.asList(
                                 "Enter .git directory location:",
                                 "Enter git object hash:",
-                                "type:commit length:190"))
+                                "type:tree length:73")),
+                new TestCase<List<String>>()
+                        .setInput(
+                                "test\n" +
+                                "ad3a818dc87b9940935b24a5aa93fac00f086bf9\n")
+                        .setAttach(Arrays.asList(
+                                "Enter .git directory location:",
+                                "Enter git object hash:",
+                                "type:tree length:35"))
         );
     }
 
