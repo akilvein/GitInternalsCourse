@@ -25,42 +25,34 @@ public class GitInternalsTest extends BaseStageTest<List<String>> {
         return List.of(
                 new TestCase<List<String>>()
                         .setInput(
-                                "test/objects/98/0a0d5f19a64b4b30a87d4206aade58726b60e3\n")
+                                "test/objects/61/8383db6d7ee3bd2e97b871205f113b6a3ba854\n")
                         .setAttach(Arrays.asList(
                                 "Enter git object location:",
-                                "blob 13",
-                                "Hello World!")),
+                                "blob 14",
+                                "Hello world! ")),
                 new TestCase<List<String>>()
                         .setInput(
-                                "test/objects/6c/c3bfadc1cef136840e08ff98dea7388c84a7bc\n")
+                                "test/objects/a8/7a4a0e9fcf5a8a091c54909b674ac2a051f5e8\n")
                         .setAttach(Arrays.asList(
                                 "Enter git object location:",
-                                "blob 10",
-                                "first line")),
-                new TestCase<List<String>>()
-                        .setInput(
-                                "test/objects/9c/40573a110ce8bd9f51180a5bb9d1a75e1a5a72\n")
-                        .setAttach(Arrays.asList(
-                                "Enter git object location:",
-                                "blob 22",
+                                "blob 24",
                                 "first line",
-                                "second line")),
+                                "second line ")),
                 new TestCase<List<String>>()
                         .setInput(
-                                "test/objects/27/2b2e47277179ab1fe0b9bfde13d43a14adc21f\n")
+                                "test/objects/4a/8abe7b618ddf9c55adbea359ce891775794a61\n")
                         .setAttach(Arrays.asList(
                                 "Enter git object location:",
-                                "blob 33",
+                                "blob 35",
                                 "first line",
                                 "second line",
-                                "third line"))
+                                "third line "))
         );
     }
 
     @Override
     public CheckResult check(String reply, List<String> expectedOutput) {
         List<String> lines = Arrays.asList(reply.split("(\\r\\n|\\r|\\n)"));
-//        lines = lines.subList(2, lines.size());
 
         if (lines.size() != expectedOutput.size()) {
             return CheckResult.FALSE(String.format(
@@ -71,12 +63,12 @@ public class GitInternalsTest extends BaseStageTest<List<String>> {
         for (int i = 0; i < lines.size(); i++) {
             if (!lines.get(i).equals(expectedOutput.get(i))) {
                 return CheckResult.FALSE(String.format(
-                        "Text at line (%d) (%s) does not match expected (%s)",
+                        "Output text at line (%d) (%s) does not match expected (%s)",
                         i, lines.get(i), expectedOutput.get(i)));
             }
         }
 
 
-        return CheckResult.TRUE;
+        return CheckResult.TRUE("Well done!");
     }
 }
