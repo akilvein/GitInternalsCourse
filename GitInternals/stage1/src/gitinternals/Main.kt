@@ -1,17 +1,15 @@
 package gitinternals
 
 import java.io.ByteArrayOutputStream
-import java.io.File
 import java.io.FileInputStream
-import java.lang.Exception
 import java.util.*
 import java.util.zip.InflaterInputStream
 
 
 sealed class GitObject {
     class Reader(filepath: String) {
-        val fis = FileInputStream(filepath)
-        val iis = InflaterInputStream(fis)
+        private val fis = FileInputStream(filepath)
+        private val iis = InflaterInputStream(fis)
 
         fun readLines(): List<String> {
             val result = mutableListOf<String>()
@@ -39,8 +37,6 @@ sealed class GitObject {
             val reader = Reader(filepath)
             val lines = reader.readLines()
 
-            val (type, declaredLength) = lines[0].split(" ")
-
             for (line in lines) {
                 println(line)
             }
@@ -48,19 +44,7 @@ sealed class GitObject {
     }
 }
 
-fun printObject(fullFilePath: String) {
-    println(fullFilePath)
-    println("**************************************************************")
-
-    try {
-        println(GitObject.parseFromFile(fullFilePath).toString())
-    }
-    catch (e: Exception) {
-        println(e.message)
-    }
-}
-
-fun main(args: Array<String>) {
+fun main() {
     //println("The current working directory is ${System.getProperty("user.dir")}")
 
     val scanner = Scanner(System.`in`)
