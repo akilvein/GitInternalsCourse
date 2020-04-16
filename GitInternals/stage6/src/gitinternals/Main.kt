@@ -236,7 +236,6 @@ fun showLog(gitDir: String, branchName: String) {
         val commit = GitObject.parseFromFile("$gitDir/objects/${hash.substring(0, 2)}/${hash.substring(2, 40)}")
 
         if (commit is GitObject.Commit) {
-            println(hash)
             println(commit.committer)
             println(commit.message)
 
